@@ -7,3 +7,5 @@
 # See http://pip-installer.org/requirement-format.html for more information.
 
 pyserial
+django-user-accounts
+pinax_theme_bootstrap_account

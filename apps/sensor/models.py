@@ -17,8 +17,9 @@ class lectura():
     encendida = False
 
 def read_temp():
-    print "vamos a leer la temp"
-    ser = serial.Serial(get_arduino_device(), serial_speed, timeout=1)
+    device = get_arduino_device()
+    print "vamos a leer la temp de %s"%device
+    ser = serial.Serial(device, serial_speed, timeout=1)
     ser.write('g')
     res = lectura()
     txt = ser.readline()
@@ -29,7 +30,6 @@ def read_temp():
 
 def set_temp(grado):
     print "vamos a mandar el limite"
-    
     ser = serial.Serial(get_arduino_device(), serial_speed, timeout=1)
     ser.readline()
     ser.readline()
