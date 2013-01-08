@@ -5,7 +5,57 @@
 
 {% block head_title %}{% trans "Geekmostato" %}{% endblock %}
 
+{% block extra_script %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            console.log("Cargamos la tabla con las temps");
+            $("#tiemporeal").load('/sensor/get/');
+            console.log("Ya deberíamos tener las temps nuevas");
+            $('#select_limite').change(
+                function() {
+                    var op = $("#select_limite option:selected").val();
+                    console.log("Hacemos uns set");
+                    $.get('http://192.168.1.114:8080/sensor/set/'+op+'/');
+                    console.log("Ya deberíamos tener las temps nuevas");
+                    $("#tiemporeal").load('/sensor/get/');
+                    console.log("Se fini");
+            });
+            //Autorefresh cada 5s
+            var refreshId = setInterval(function() {
+                $("#tiemporeal").load('/sensor/get/');
+                console.log("Datos nuevos");
+                }, 5000);
+            
+        });
+    </script>
+{% endblock %}
+
 {% block body %}
-    <h1>{% trans "Geekmostato" %}</h1>
+    <h1>{% trans "Datos en tiempo real" %}</h1>
+
+<div id="tiemporeal" name="tiemporeal" >
+</div>
+
+    <button class="btn btn-large btn-primary" type="button" 
+        onclick='$("#tiemporeal").load("/sensor/get/");'>  Refrescar </button>
+    <h1>{% trans "Cambiar limite" %}</h1>
+    <form>
+        <fieldset>
+            <select name="select_limite" id="select_limite" >
+                <option value="5">15ºC</option>
+                <option value="6">16ºC</option>
+                <option value="7">17ºC</option>
+                <option value="8">18ºC</option>
+                <option value="9">19ºC</option>
+                <option value="0">20ºC</option>
+                <option value="1">21ºC</option>
+                <option value="2">22ºC</option>
+                <option value="3">23ºC</option>
+                <option value="4">24ºC</option>
+            </select>
+        </fieldset>
+    </form>
+
+    <h1>{% trans "Historico" %}</h1>
     
 {% endblock %}

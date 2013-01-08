@@ -1,23 +1,8 @@
-{% extends "site_base.html" %}
+
 
 {% load i18n %}
 {% load ifsetting_tag %}
 
-{% block head_title %}{% trans "Geekmostato" %}{% endblock %}
-
-{% block extra_head %}
-    <script type="text/javascript">
-        $() {
-            $('#set_limite').change(function() {
-            alert('Handler for .change() called.');
-});  
-        };
-    </script>
-{% endblock %}
-
-{% block body %}
-    <h1>{% trans "Datos en tiempo real" %}</h1>
-    
     <table class="table">
     <tr>
         <td>Temperatura</td> <td>{{ lectura.temperatura }}</td>
@@ -29,25 +14,3 @@
         <td>Encendida</td><td>{{ lectura.encendida }}</td>
     </tr>
     </table>
-    <button class="btn btn-large btn-primary" type="button" onclick="location.reload()">  Refrescar </button>
-    <h1>{% trans "Cambiar limite" %}</h1>
-    <form>
-        <fieldset>
-            <select name="set_limite">
-                <option value="5">15ºC</option>
-                <option value="6">16ºC</option>
-                <option value="7">17ºC</option>
-                <option value="8">18ºC</option>
-                <option value="9">19ºC</option>
-                <option value="0">20ºC</option>
-                <option value="1">21ºC</option>
-                <option value="2">22ºC</option>
-                <option value="3">23ºC</option>
-                <option value="4">24ºC</option>
-            </select>
-        </fieldset>
-    </form>
-
-    <h1>{% trans "Historico" %}</h1>
-    
-{% endblock %}
