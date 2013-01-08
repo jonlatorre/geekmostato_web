@@ -1,6 +1,10 @@
 from django.db import models
-
 # Create your models here.
+
+class lectura():
+    temperatura = 0
+    limite = 0
+    encendida = False
 
 def read_temp():
     import serial
@@ -8,8 +12,10 @@ def read_temp():
     ser.readline()
     ser.readline()
     ser.write('g')
-    res = ser.readline()
+    res = lectura()
+    txt = ser.readline()
     ser.close()
+    lectura.temperatura, lectura.limite, lectura.encendida = txt.split(':')
     return res
 
 def set_temp(grado):
