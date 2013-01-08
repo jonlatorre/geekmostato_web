@@ -6,18 +6,34 @@
 {% block head_title %}{% trans "Geekmostato" %}{% endblock %}
 
 {% block extra_script %}
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+    
     <script type="text/javascript">
         $(document).ready(function(){
             console.log("Cargamos la tabla con las temps");
             $("#tiemporeal").load('/sensor/get/');
             console.log("Ya deberíamos tener las temps nuevas");
-            $('#select_limite').change(
+            var select = $( "#select_limite" );
+            var slider = $( "<div id='slider'></div>" ).insertAfter( select ).slider({
+                min: 12,
+                max: 25,
+                step: 1,
+                value: select[ 0 ].selectedIndex + 1,
+                slide: function( event, ui ) {
+                    console.log("Hemos seleccionado en el slide: "+ui.value);
+                    $.get('http://192.168.1.114:8080/sensor/set/'+ui.value+'/');
+                    select.val(ui.value);
+                }
+            });
+            select.change(
                 function() {
                     var op = $("#select_limite option:selected").val();
-                    console.log("Hacemos uns set");
+                    console.log("Hacemos uns set "+op);
                     $.get('http://192.168.1.114:8080/sensor/set/'+op+'/');
-                    console.log("Ya deberíamos tener las temps nuevas");
+                    //console.log("Ya deberíamos tener las temps nuevas");
                     $("#tiemporeal").load('/sensor/get/');
+                    slider.slider( "value", op );
                     console.log("Se fini");
             });
             //Autorefresh cada 5s
@@ -25,6 +41,7 @@
                 $("#tiemporeal").load('/sensor/get/');
                 console.log("Datos nuevos");
                 }, 5000);
+
             
         });
     </script>
@@ -42,16 +59,20 @@
     <form>
         <fieldset>
             <select name="select_limite" id="select_limite" >
-                <option value="5">15ºC</option>
-                <option value="6">16ºC</option>
-                <option value="7">17ºC</option>
-                <option value="8">18ºC</option>
-                <option value="9">19ºC</option>
-                <option value="0">20ºC</option>
-                <option value="1">21ºC</option>
-                <option value="2">22ºC</option>
-                <option value="3">23ºC</option>
-                <option value="4">24ºC</option>
+                <option value="12">12ºC</option>
+                <option value="13">13ºC</option>
+                <option value="14">14ºC</option>
+                <option value="15">15ºC</option>
+                <option value="16">16ºC</option>
+                <option value="17">17ºC</option>
+                <option value="18">18ºC</option>
+                <option value="19">19ºC</option>
+                <option value="20">20ºC</option>
+                <option value="21">21ºC</option>
+                <option value="22">22ºC</option>
+                <option value="23">23ºC</option>
+                <option value="24">24ºC</option>
+                <option value="25">25ºC</option>
             </select>
         </fieldset>
     </form>
