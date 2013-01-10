@@ -14,6 +14,7 @@
             console.log("Cargamos la tabla con las temps");
             $("#tiemporeal").load('/sensor/get/');
             console.log("Ya deberíamos tener las temps nuevas");
+            //Ponemos el slider asociado al select
             var select = $( "#select_limite" );
             var slider = $( "<div id='slider'></div>" ).insertAfter( select ).slider({
                 min: 12,
@@ -22,7 +23,7 @@
                 value: select[ 0 ].selectedIndex + 1,
                 slide: function( event, ui ) {
                     console.log("Hemos seleccionado en el slide: "+ui.value);
-                    $.get('http://192.168.1.114:8080/sensor/set/'+ui.value+'/');
+                    $.get('/sensor/set/'+ui.value+'/');
                     select.val(ui.value);
                 }
             });
@@ -30,17 +31,17 @@
                 function() {
                     var op = $("#select_limite option:selected").val();
                     console.log("Hacemos uns set "+op);
-                    $.get('http://192.168.1.114:8080/sensor/set/'+op+'/');
+                    $.get('/sensor/set/'+op+'/');
                     //console.log("Ya deberíamos tener las temps nuevas");
                     $("#tiemporeal").load('/sensor/get/');
                     slider.slider( "value", op );
                     console.log("Se fini");
             });
-            //Autorefresh cada 5s
+            //Autorefresh cada 15s
             var refreshId = setInterval(function() {
                 $("#tiemporeal").load('/sensor/get/');
                 console.log("Datos nuevos");
-                }, 5000);
+                }, 15000);
 
             
         });

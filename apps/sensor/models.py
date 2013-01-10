@@ -1,5 +1,14 @@
 from django.db import models
-# Create your models here.
+import os
+
+DEVICE_LIST = {'/dev/ttyUSB0', '/dev/ttyUSB1', '/dev/ttyACM0', '/dev/ttyACM1'}
+serial_speed = 57600
+
+def get_arduino_device():
+    for device in DEVICE_LIST:
+        if os.path.exists(device):
+            return device
+
 
 class lectura():
     temperatura = 0
@@ -8,7 +17,7 @@ class lectura():
 
 def read_temp():
     import serial
-    ser = serial.Serial('/dev/ttyUSB0', 9600, timeout=1)
+    ser = serial.Serial(get_arduino_device(), serial_speed, timeout=1)
     ser.readline()
     ser.readline()
     ser.write('g')
@@ -20,7 +29,7 @@ def read_temp():
 
 def set_temp(grado):
     import serial
-    ser = serial.Serial('/dev/ttyUSB0', 9600, timeout=1)
+    ser = serial.Serial(get_arduino_device(), serial_speed, timeout=1)
     ser.readline()
     ser.readline()
     ser.write('s%s'%grado)
