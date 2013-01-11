@@ -5,18 +5,25 @@
 
 {% block head_title %}{% trans "Geekmostato" %}{% endblock %}
 
-{% block extra_script %}
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
-    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-    
+{% block extra_head %}
+<!--
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+    -->
     <script type="text/javascript">
+	function refresh_datos() {
+                $("#tiemporeal").load('/sensor/get/');
+		$( "#select_limite" ).val($("#lectura_temp_limte").html());
+                console.log("Datos nuevos");
+	};
         $(document).ready(function(){
             console.log("Cargamos la tabla con las temps");
-            $("#tiemporeal").load('/sensor/get/');
+	    refresh_datos();
             console.log("Ya deberíamos tener las temps nuevas");
             //Ponemos el slider asociado al select
             var select = $( "#select_limite" );
-            var slider = $( "<div id='slider'></div>" ).insertAfter( select ).slider({
+       /*     var slider = $( "<div id='slider'></div>" ).insertAfter( select ).slider({
                 min: 12,
                 max: 25,
                 step: 1,
@@ -27,20 +34,20 @@
                     select.val(ui.value);
                 }
             });
+*/
             select.change(
                 function() {
                     var op = $("#select_limite option:selected").val();
                     console.log("Hacemos uns set "+op);
                     $.get('/sensor/set/'+op+'/');
                     //console.log("Ya deberíamos tener las temps nuevas");
-                    $("#tiemporeal").load('/sensor/get/');
-                    slider.slider( "value", op );
+                    refresh_datos();
+                    //slider.slider( "value", op );
                     console.log("Se fini");
             });
             //Autorefresh cada 15s
             var refreshId = setInterval(function() {
-                $("#tiemporeal").load('/sensor/get/');
-                console.log("Datos nuevos");
+		refresh_datos();
                 }, 15000);
 
             
@@ -55,7 +62,7 @@
 </div>
 
     <button class="btn btn-large btn-primary" type="button" 
-        onclick='$("#tiemporeal").load("/sensor/get/");'>  Refrescar </button>
+        onclick='refresh_datos();'>  Refrescar </button>
     <h1>{% trans "Cambiar limite" %}</h1>
     <form>
         <fieldset>
