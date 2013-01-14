@@ -8,21 +8,13 @@
 {% block extra_head %}
 <<<<<<< HEAD
  <script type="text/javascript">
-        $(document).load(function(){
-=======
-<!--
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
-<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
-<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-    -->
-    <script type="text/javascript">
 	function refresh_datos() {
                 $("#tiemporeal").load('/sensor/get/');
 		$( "#select_limite" ).val($("#lectura_temp_limte").html());
                 console.log("Datos nuevos");
 	};
         $(document).ready(function(){
->>>>>>> 58eb30d86222f124110eaef2ce576cff2e603d96
+
             console.log("Cargamos la tabla con las temps");
 	    refresh_datos();
             console.log("Ya deberíamos tener las temps nuevas");
