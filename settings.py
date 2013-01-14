@@ -131,7 +131,10 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "pinax.core.context_processors.pinax_settings",
     
     "pinax.apps.account.context_processors.account",
+
 ]
+
+THEME_ACCOUNT_CONTACT_EMAIL="info@etxea.net"
 
 INSTALLED_APPS = [
     # Django
@@ -147,6 +150,9 @@ INSTALLED_APPS = [
     
     # theme
     "pinax_theme_bootstrap",
+    "pinax_theme_bootstrap_account",
+    #"pinax_theme_jquerymobile",
+    #"pinax-theme-redbox",
     
     # external
     "staticfiles",

@@ -1,11 +1,9 @@
-
-
 {% load i18n %}
 {% load ifsetting_tag %}
-
-    <table class="table">
+    <table class="table table-condensed">
+        <tbody>
     <tr>
-        <td>Temperatura</td> <td>{{ lectura.temperatura }}</td>
+        <td>Temperatura</td><td>{{ lectura.temperatura }}</td>
     </tr>
     <tr>
         <td>Limite</td><td>{{ lectura.limite }}</td>
@@ -13,4 +11,5 @@
     <tr>
         <td>Encendida</td><td>{{ lectura.encendida }}</td>
     </tr>
+    </tbody>
     </table>
